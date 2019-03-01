@@ -1,11 +1,11 @@
 {
-  "name": "sync-lenses-avro",
-  "version": "1.0.0",
+  "name": "dev-sync-avro",
+  "version": "1.0.2",
   "description": "This will grab all of the subjects from a given avro registry and sync them in to lenses",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/Zergleb/sync-lenses-avro",
+  "repository": "https://github.com/Zergleb/dev-sync-avro",
   "license": "MIT",
   "keywords": [],
   "scripts": {
@@ -13,6 +13,8 @@
     "build": "run-s clean && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
+    "buildAndExecute": "npm run build && npm run execute",
+    "execute": "node build/main/index",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
@@ -34,6 +36,9 @@
     "all": "run-s reset test cov:check doc:html",
     "prepare-release": "run-s all version doc:publish"
   },
+  "bin": {
+    "dev-sync-avro": "build/main/bin/run.js"
+  },
   "scripts-info": {
     "info": "Display information about the package scripts",
     "build": "Clean and rebuild the project",
@@ -51,6 +56,11 @@
     "node": ">=8.9"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/bluebird-global": "^3.5.11",
+    "@types/command-line-args": "^5.0.0",
+    "axios": "^0.18.0",
+    "command-line-args": "^5.0.2",
     "sha.js": "^2.4.11"
   },
   "devDependencies": {
