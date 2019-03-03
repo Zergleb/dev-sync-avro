@@ -1,6 +1,6 @@
 {
   "name": "dev-sync-avro",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "This will grab all of the subjects from a given avro registry and sync them in to lenses",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",

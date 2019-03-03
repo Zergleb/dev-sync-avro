@@ -5,11 +5,11 @@ import commandLineArgs from 'command-line-args';
 
 // tslint:disable-next-line:readonly-array
 const optionDefinitions = [
-  { name: 'sourceRegistry', alias: 'r', type: String },
-  { name: 'localRegistry', alias: 'l', type: String }
+  { name: 'sourceRegistry', alias: 's', type: String },
+  { name: 'destRegistry', alias: 'd', type: String }
 ];
 
-const { sourceRegistry, localRegistry } = commandLineArgs(optionDefinitions);
+const { sourceRegistry, destRegistry } = commandLineArgs(optionDefinitions);
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Edit Configs Here                                                               //
@@ -33,7 +33,7 @@ async function getSchemaFromSourceRegistry(subject: string) {
   )).data;
 }
 
-async function uploadSchemaToLocalRegistry(subject: string, schema: any) {
+async function uploadSchemaToDestRegistry(subject: string, schema: any) {
   for (const index in schema.fields) {
     const field = schema.fields[index];
     if (
@@ -47,7 +47,7 @@ async function uploadSchemaToLocalRegistry(subject: string, schema: any) {
   }
 
   return axios.post(
-    `${localRegistry}/subjects/${subject}/versions`,
+    `${destRegistry}/subjects/${subject}/versions`,
     {
       schema: JSON.stringify(schema)
     },
@@ -64,7 +64,7 @@ async function downloadSchemaFromSourceAndUploadToLocal(
   sourceSubject: string
 ) {
   const sourceSchema = await getSchemaFromSourceRegistry(sourceSubject);
-  await uploadSchemaToLocalRegistry(newLocalSubjectName, sourceSchema);
+  await uploadSchemaToDestRegistry(newLocalSubjectName, sourceSchema);
 }
 
 async function getAllSchemasFromSource() {
